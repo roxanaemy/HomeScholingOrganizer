@@ -1,0 +1,1987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Homeschool Family Organizer - Complete Homeschooling Management System</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+  <style>
+    :root {
+      --primary: #1a1a1a;
+      --primary-bg: #f8f8f8;
+      --neutral: #666;
+      --neutral-light: #e0e0e0;
+      --white: #ffffff;
+      --danger: #ef4444;
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --accent: #06b6d4;
+      --accent-light: #f0f9fb;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--primary-bg);
+      color: var(--primary);
+      line-height: 1.6;
+    }
+
+    header {
+      background: var(--white);
+      border-bottom: 1px solid var(--neutral-light);
+      padding: 16px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .header-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-title {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn-header {
+      padding: 8px 14px;
+      border: 1px solid var(--neutral-light);
+      border-radius: 6px;
+      background: var(--white);
+      color: var(--primary);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-header:hover {
+      background: var(--primary-bg);
+      border-color: var(--primary);
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--neutral-light);
+      overflow-x: auto;
+    }
+
+    .tab {
+      padding: 12px 16px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--neutral);
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .tab.active {
+      color: var(--primary);
+      border-bottom-color: var(--accent);
+    }
+
+    .tab:hover {
+      color: var(--primary);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .card {
+      background: var(--white);
+      border: 1px solid var(--neutral-light);
+      border-radius: 8px;
+      padding: 20px;
+    }
+
+    .metric {
+      text-align: center;
+    }
+
+    .metric-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--neutral);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    .metric-value {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .section {
+      background: var(--white);
+      border: 1px solid var(--neutral-light);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .section h2 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--neutral-light);
+    }
+
+    .section h3 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-top: 16px;
+      margin-bottom: 8px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--primary);
+    }
+
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--neutral-light);
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--primary);
+      background: var(--white);
+    }
+
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-light);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .btn {
+      padding: 10px 16px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--white);
+    }
+
+    .btn-primary:hover {
+      background: #0891b2;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(6, 182, 212, 0.2);
+    }
+
+    .btn-secondary {
+      background: var(--primary-bg);
+      color: var(--primary);
+      border: 1px solid var(--neutral-light);
+    }
+
+    .btn-secondary:hover {
+      background: #e8e8e8;
+    }
+
+    .btn-danger {
+      background: var(--danger);
+      color: var(--white);
+    }
+
+    .btn-danger:hover {
+      background: #dc2626;
+    }
+
+    .lesson-card {
+      background: var(--primary-bg);
+      border-left: 4px solid var(--accent);
+      padding: 16px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+    }
+
+    .lesson-card h4 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .lesson-meta {
+      display: flex;
+      gap: 12px;
+      font-size: 13px;
+      color: var(--neutral);
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+    }
+
+    th {
+      background: var(--primary-bg);
+      padding: 12px;
+      text-align: left;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--neutral);
+      border-bottom: 1px solid var(--neutral-light);
+    }
+
+    td {
+      padding: 12px;
+      border-bottom: 1px solid var(--neutral-light);
+      font-size: 14px;
+    }
+
+    tr:hover {
+      background: var(--primary-bg);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--neutral);
+    }
+
+    .empty-state p {
+      margin-bottom: 16px;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: var(--white);
+      border-radius: 12px;
+      width: 90%;
+      max-width: 700px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+
+    .modal-header {
+      padding: 20px;
+      border-bottom: 1px solid var(--neutral-light);
+      background: var(--primary-bg);
+    }
+
+    .modal-header h2 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .modal-header p {
+      font-size: 13px;
+      color: var(--neutral);
+    }
+
+    .modal-body {
+      padding: 20px;
+    }
+
+    .modal-footer {
+      padding: 16px 20px;
+      border-top: 1px solid var(--neutral-light);
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .chart-container {
+      position: relative;
+      width: 100%;
+      height: 300px;
+      max-width: 100%;
+      margin-bottom: 24px;
+      overflow: hidden;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .status-complete {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .status-in-progress {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .status-not-started {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .search-input {
+      margin-bottom: 16px;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: var(--neutral-light);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      transition: width 0.3s;
+    }
+
+    @media (max-width: 768px) {
+      .header-container {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .header-actions {
+        width: 100%;
+      }
+      .btn-header {
+        flex: 1;
+      }
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+      .tabs {
+        overflow-x: auto;
+      }
+    }
+
+    /* DEMO BANNER STYLES */
+    .demo-banner {
+      background: #2a2a2a;
+      color: #ffffff;
+      padding: 20px 24px;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      border-bottom: 2px solid #06b6d4;
+      overflow: hidden;
+    }
+
+    /* Shimmer Line - PASA UNA SOLA VEZ */
+    .demo-banner::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.3) 50%,
+        transparent 100%
+      );
+      animation: shimmer-line 2.5s ease-in-out 1;
+      pointer-events: none;
+    }
+
+    @keyframes shimmer-line {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+
+    .demo-banner-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+
+    .demo-banner-content {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+    }
+
+    .demo-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      padding: 8px 14px;
+      background: rgba(6, 182, 212, 0.15);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+
+    .demo-badge::before {
+      content: '●';
+      font-size: 9px;
+      color: #06b6d4;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 0.4;
+        transform: scale(0.8);
+      }
+    }
+
+    .demo-banner-text {
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .demo-banner-text strong {
+      font-weight: 600;
+      display: block;
+      font-size: 17px;
+      margin-bottom: 2px;
+      color: #ffffff;
+    }
+
+    .demo-banner-text span {
+      font-size: 13px;
+      opacity: 0.85;
+      color: #cccccc;
+    }
+
+    .demo-banner-cta {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    /* BOTÓN CON GLOW - PULSANTE CONTINUO */
+    .btn-etsy {
+      background: #06b6d4;
+      color: white;
+      padding: 12px 22px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      position: relative;
+      overflow: hidden;
+      white-space: nowrap;
+      animation: button-glow-outer 2.5s ease-in-out infinite;
+    }
+
+    @keyframes button-glow-outer {
+      0%, 100% {
+        box-shadow: 0 0 5px rgba(6, 182, 212, 0.3),
+                    0 0 10px rgba(6, 182, 212, 0.2);
+      }
+      50% {
+        box-shadow: 0 0 20px rgba(6, 182, 212, 0.6),
+                    0 0 30px rgba(6, 182, 212, 0.3);
+      }
+    }
+
+    .btn-etsy:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 25px rgba(6, 182, 212, 0.6),
+                  0 8px 20px rgba(6, 182, 212, 0.4) !important;
+      background: #00a8c4;
+    }
+
+    .btn-etsy::after {
+      content: '↗';
+      font-size: 12px;
+    }
+
+    @media (max-width: 768px) {
+      .demo-banner {
+        padding: 16px 16px;
+      }
+
+      .demo-banner-container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .demo-banner-text {
+        font-size: 12px;
+      }
+
+      .demo-banner-text strong {
+        font-size: 14px;
+        margin-bottom: 4px;
+      }
+
+      .demo-banner-text span {
+        font-size: 11px;
+      }
+
+      .demo-banner-cta {
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .btn-etsy {
+        flex: 1;
+        justify-content: center;
+        padding: 10px 14px;
+      }
+
+      .demo-badge {
+        padding: 5px 10px;
+        font-size: 11px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .demo-banner::before,
+      .btn-etsy,
+      .demo-badge::before {
+        animation: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-banner">
+    <div class="demo-banner-container">
+      <div class="demo-banner-content">
+        <div class="demo-badge">Live Demo</div>
+        <div class="demo-banner-text">
+          <strong>Explore the Full App with Sample Data</strong>
+          <span>View-only preview • Restricted features</span>
+        </div>
+      </div>
+      <div class="demo-banner-cta">
+        <span style="font-size: 14px; color: #cccccc;">See the full version</span>
+        <button class="btn-etsy" onclick="window.open('https://www.etsy.com/listing/4553470242/homeschool-planner-web-app-multiple-kids', '_blank')">View on Etsy</button>
+      </div>
+    </div>
+  </div>
+
+  <header>
+    <div class="header-container">
+      <div class="header-title">🏠 Homeschool Family Organizer</div>
+      <div class="header-actions">
+        <button class="btn-header" onclick="window.open('https://www.etsy.com/shop/EverlineAutomation', '_blank')">🛍️ Shop</button>
+        <button class="btn-header" onclick="window.open('How-to-Use.html', '_blank')">📖 Help</button>
+        <button class="btn-header" onclick="document.getElementById('csvFileInput').click()">📥 Import CSV</button>
+        <button class="btn-header" onclick="exportToCSV()">📤 Export</button>
+        <button class="btn-header" onclick="resetData()">🔄 Reset</button>
+      </div>
+      <input type="file" id="csvFileInput" accept=".csv" style="display:none;" onchange="handleCSVImport(event)">
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- TABS -->
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('dashboard', this)">📊 Dashboard</button>
+      <button class="tab" onclick="switchTab('students', this)">👨‍👩‍👧 Students</button>
+      <button class="tab" onclick="switchTab('curriculum', this)">📚 Curriculum</button>
+      <button class="tab" onclick="switchTab('daily', this)">📅 Daily Log</button>
+      <button class="tab" onclick="switchTab('grades', this)">📈 Grades</button>
+      <button class="tab" onclick="switchTab('progress', this)">🎯 Progress</button>
+    </div>
+
+    <!-- DASHBOARD TAB -->
+    <div id="dashboard" class="tab-content active">
+      <div class="grid-2">
+        <div class="card">
+          <div class="metric">
+            <div class="metric-label">Students</div>
+            <div class="metric-value" id="totalStudents">0</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="metric">
+            <div class="metric-label">Subjects</div>
+            <div class="metric-value" id="totalSubjects">0</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="metric">
+            <div class="metric-label">Learning Days</div>
+            <div class="metric-value" id="totalDays">0</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="metric">
+            <div class="metric-label">Avg Grade</div>
+            <div class="metric-value" id="avgGrade">0%</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Quick Actions</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px;">
+          <button class="btn btn-primary" onclick="openModal('addStudentModal')">+ Add Student</button>
+          <button class="btn btn-primary" onclick="openModal('addSubjectModal')">+ Add Subject</button>
+          <button class="btn btn-primary" onclick="openModal('addDailyLogModal')">+ Log Today</button>
+          <button class="btn btn-secondary" onclick="
+            const tab = document.querySelector('.tab:nth-child(2)');
+            switchTab('students', tab);
+          ">View All</button>
+        </div>
+      </div>
+
+      <div class="grid-2" style="grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));">
+        <div class="section">
+          <h3>Students Learning</h3>
+          <div class="chart-container">
+            <canvas id="studentChart"></canvas>
+          </div>
+        </div>
+        <div class="section">
+          <h3>Subject Progress</h3>
+          <div class="chart-container">
+            <canvas id="subjectChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Active Subjects</h2>
+        <div id="activeSubjectsContainer"></div>
+      </div>
+    </div>
+
+    <!-- STUDENTS TAB -->
+    <div id="students" class="tab-content">
+      <div class="section">
+        <h2>Family Students</h2>
+        
+        <button class="btn btn-primary" onclick="openModal('addStudentModal')" style="margin-bottom: 16px;">+ Add Student</button>
+        
+        <input type="text" class="form-input search-input" id="studentSearch" placeholder="Search by name..." onkeyup="filterStudents()">
+        
+        <table id="studentTable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Grade Level</th>
+              <th>Age</th>
+              <th>Started</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="studentTableBody">
+          </tbody>
+        </table>
+        <div id="noStudents" class="empty-state">
+          <p>No students yet. Add your first student to get started.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CURRICULUM TAB -->
+    <div id="curriculum" class="tab-content">
+      <div class="section">
+        <h2>Curriculum & Subjects</h2>
+        
+        <button class="btn btn-primary" onclick="openModal('addSubjectModal')" style="margin-bottom: 16px;">+ Add Subject</button>
+        
+        <input type="text" class="form-input search-input" id="subjectSearch" placeholder="Search subjects..." onkeyup="filterSubjects()">
+        
+        <div id="subjectsContainer"></div>
+        <div id="noSubjects" class="empty-state">
+          <p>No subjects yet. Add subjects your student(s) are studying.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAILY LOG TAB -->
+    <div id="daily" class="tab-content">
+      <div class="section">
+        <h2>Daily Learning Log</h2>
+        
+        <button class="btn btn-primary" onclick="openModal('addDailyLogModal')" style="margin-bottom: 16px;">+ Log Today's Learning</button>
+        
+        <input type="text" class="form-input search-input" id="dailySearch" placeholder="Search by student or date..." onkeyup="filterDailyLogs()">
+        
+        <table id="dailyTable">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Student</th>
+              <th>Subject</th>
+              <th>Duration</th>
+              <th>Notes</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="dailyTableBody">
+          </tbody>
+        </table>
+        <div id="noDailyLogs" class="empty-state">
+          <p>No learning logs yet. Start tracking daily learning.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- GRADES TAB -->
+    <div id="grades" class="tab-content">
+      <div class="section">
+        <h2>Grades & Assessments</h2>
+        
+        <button class="btn btn-primary" onclick="openModal('addGradeModal')" style="margin-bottom: 16px;">+ Record Grade</button>
+        
+        <input type="text" class="form-input search-input" id="gradeSearch" placeholder="Search..." onkeyup="filterGrades()">
+        
+        <table id="gradesTable">
+          <thead>
+            <tr>
+              <th>Student</th>
+              <th>Subject</th>
+              <th>Assignment</th>
+              <th>Grade</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="gradesTableBody">
+          </tbody>
+        </table>
+        <div id="noGrades" class="empty-state">
+          <p>No grades recorded yet. Start tracking assessments.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROGRESS TAB -->
+    <div id="progress" class="tab-content">
+      <div class="section">
+        <h2>Student Progress Reports</h2>
+        
+        <div id="progressContainer"></div>
+        <div id="noProgress" class="empty-state">
+          <p>Add students and grades to see progress reports.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SHOP SECTION - SUBTLE FOOTER -->
+    <div class="section" style="text-align: center; background: transparent; margin-top: 60px; border: none; border-top: 1px solid var(--neutral-light); padding-top: 30px; padding-bottom: 30px;">
+      <div style="padding: 0;">
+        <p style="font-size: 12px; color: var(--neutral); margin-bottom: 12px; letter-spacing: 0.3px;">For more homeschooling and education tools, visit our Etsy shop</p>
+        <a href="https://www.etsy.com/shop/EverlineAutomation" target="_blank" style="display: inline-block; padding: 8px 14px; font-size: 12px; color: var(--accent); text-decoration: none; border: 1px solid var(--neutral-light); border-radius: 4px; transition: all 0.2s; font-weight: 500;">EverlineAutomation Shop</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODALS -->
+
+  <!-- ADD STUDENT MODAL -->
+  <div class="modal" id="addStudentModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Add Student</h2>
+        <p>Add a child to your homeschool</p>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <input type="text" class="form-input" id="studentName" placeholder="e.g., Sarah Anderson">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Grade Level</label>
+            <select class="form-select" id="studentGrade">
+              <option value="">Select grade...</option>
+              <option value="K">Kindergarten</option>
+              <option value="1">1st Grade</option>
+              <option value="2">2nd Grade</option>
+              <option value="3">3rd Grade</option>
+              <option value="4">4th Grade</option>
+              <option value="5">5th Grade</option>
+              <option value="6">6th Grade</option>
+              <option value="7">7th Grade</option>
+              <option value="8">8th Grade</option>
+              <option value="9">9th Grade</option>
+              <option value="10">10th Grade</option>
+              <option value="11">11th Grade</option>
+              <option value="12">12th Grade</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Age</label>
+            <input type="number" class="form-input" id="studentAge" placeholder="e.g., 10">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Start Date</label>
+          <input type="date" class="form-input" id="studentStart">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('addStudentModal')">Cancel</button>
+        <button class="btn btn-primary" onclick="addStudent()">Add Student</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADD SUBJECT MODAL -->
+  <div class="modal" id="addSubjectModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Add Subject</h2>
+        <p>Add a subject to your curriculum</p>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Subject Name</label>
+          <input type="text" class="form-input" id="subjectName" placeholder="e.g., Mathematics">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Student</label>
+            <select class="form-select" id="subjectStudent">
+              <option value="">Select student...</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Grade Level</label>
+            <select class="form-select" id="subjectGrade">
+              <option value="">Select grade...</option>
+              <option value="K">Kindergarten</option>
+              <option value="1">1st</option>
+              <option value="2">2nd</option>
+              <option value="3">3rd</option>
+              <option value="4">4th</option>
+              <option value="5">5th</option>
+              <option value="6">6th</option>
+              <option value="7">7th</option>
+              <option value="8">8th</option>
+              <option value="9">9th</option>
+              <option value="10">10th</option>
+              <option value="11">11th</option>
+              <option value="12">12th</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Curriculum/Materials</label>
+          <input type="text" class="form-input" id="subjectCurriculum" placeholder="e.g., Saxon Math, Singapore Math">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Learning Objectives</label>
+          <textarea class="form-input" id="subjectObjectives" rows="3" placeholder="What will the student learn..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('addSubjectModal')">Cancel</button>
+        <button class="btn btn-primary" onclick="addSubject()">Add Subject</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADD DAILY LOG MODAL -->
+  <div class="modal" id="addDailyLogModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Log Learning</h2>
+        <p>Record today's learning activities</p>
+      </div>
+      <div class="modal-body">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Date</label>
+            <input type="date" class="form-input" id="logDate">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Student</label>
+            <select class="form-select" id="logStudent">
+              <option value="">Select student...</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Subject</label>
+            <input type="text" class="form-input" id="logSubject" placeholder="e.g., Mathematics">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Duration (minutes)</label>
+            <input type="number" class="form-input" id="logDuration" placeholder="e.g., 45">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Activities/Notes</label>
+          <textarea class="form-input" id="logNotes" rows="3" placeholder="What did they learn or work on..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('addDailyLogModal')">Cancel</button>
+        <button class="btn btn-primary" onclick="addDailyLog()">Log Activity</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADD GRADE MODAL -->
+  <div class="modal" id="addGradeModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Record Grade</h2>
+        <p>Add an assessment or grade</p>
+      </div>
+      <div class="modal-body">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Student</label>
+            <select class="form-select" id="gradeStudent">
+              <option value="">Select student...</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Subject</label>
+            <input type="text" class="form-input" id="gradeSubject" placeholder="e.g., Mathematics">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Assignment/Test</label>
+          <input type="text" class="form-input" id="gradeAssignment" placeholder="e.g., Chapter 5 Test">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Grade</label>
+            <input type="number" class="form-input" id="gradeValue" placeholder="e.g., 95" min="0" max="100">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Date</label>
+            <input type="date" class="form-input" id="gradeDate">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Notes</label>
+          <textarea class="form-input" id="gradeNotes" rows="2" placeholder="Optional notes..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('addGradeModal')">Cancel</button>
+        <button class="btn btn-primary" onclick="addGrade()">Record Grade</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let data = {
+      students: [],
+      subjects: [],
+      dailyLogs: [],
+      grades: []
+    };
+
+    window.addEventListener('load', () => {
+      loadData();
+      if (data.students.length === 0) {
+        loadDemoData();
+      }
+      updateDashboard();
+      updateStudentsTable();
+      updateSubjectsDisplay();
+      updateDailyLogsTable();
+      updateGradesTable();
+      updateProgressReports();
+      populateSelects();
+      updateCharts();
+      
+      document.getElementById('logDate').valueAsDate = new Date();
+      document.getElementById('gradeDate').valueAsDate = new Date();
+      document.getElementById('studentStart').valueAsDate = new Date();
+    });
+
+    function loadData() {
+      const stored = localStorage.getItem('homeschoolData');
+      if (stored) {
+        data = JSON.parse(stored);
+      }
+    }
+
+    function saveData() {
+      localStorage.setItem('homeschoolData', JSON.stringify(data));
+    }
+
+    function loadDemoData() {
+      data.students = [
+        {id: 1, name: "Sarah Anderson", grade: "5", age: 10, startDate: "2024-09-01"},
+        {id: 2, name: "Michael Anderson", grade: "3", age: 8, startDate: "2024-09-01"},
+        {id: 3, name: "Emma Anderson", grade: "7", age: 12, startDate: "2024-09-01"}
+      ];
+
+      data.subjects = [
+        {id: 1, name: "Mathematics", student: 1, grade: "5", curriculum: "Saxon Math 5/4", objectives: "Master fractions, decimals, and basic geometry"},
+        {id: 2, name: "English Language Arts", student: 1, grade: "5", curriculum: "Charlotte Mason Approach", objectives: "Reading, writing, literature analysis"},
+        {id: 3, name: "Science", student: 1, grade: "5", curriculum: "Elemental Science", objectives: "Hands-on science experiments"},
+        {id: 4, name: "Mathematics", student: 2, grade: "3", curriculum: "Singapore Math", objectives: "Master addition, subtraction, multiplication"},
+        {id: 5, name: "Social Studies", student: 1, grade: "5", curriculum: "Mystery of History", objectives: "American history and geography"}
+      ];
+
+      data.dailyLogs = [
+        {id: 1, date: "2024-12-13", student: 1, subject: "Mathematics", duration: 45, notes: "Worked on decimal multiplication, completed 20 problems"},
+        {id: 2, date: "2024-12-13", student: 1, subject: "English Language Arts", duration: 60, notes: "Read Chapter 3 of novel, discussed main characters"},
+        {id: 3, date: "2024-12-13", student: 2, subject: "Mathematics", duration: 30, notes: "Practiced 2-digit multiplication, 80% accuracy"},
+        {id: 4, date: "2024-12-12", student: 1, subject: "Science", duration: 50, notes: "Plant growth experiment, measured height and leaf count"},
+        {id: 5, date: "2024-12-12", student: 1, subject: "Social Studies", duration: 40, notes: "Studied George Washington, completed timeline"}
+      ];
+
+      data.grades = [
+        {id: 1, student: 1, subject: "Mathematics", assignment: "Decimal Multiplication Quiz", grade: 92, date: "2024-12-13", notes: "Good work, needs practice on complex decimals"},
+        {id: 2, student: 1, subject: "English Language Arts", assignment: "Chapter Summary Essay", grade: 88, date: "2024-12-12", notes: "Good analysis, add more details"},
+        {id: 3, student: 2, subject: "Mathematics", assignment: "Multiplication Facts", grade: 95, date: "2024-12-13", notes: "Excellent progress!"},
+        {id: 4, student: 1, subject: "Science", assignment: "Lab Report", grade: 90, date: "2024-12-11", notes: "Clear writing, good observations"}
+      ];
+
+      saveData();
+    }
+
+    function updateDashboard() {
+      document.getElementById('totalStudents').textContent = data.students.length;
+      
+      const subjects = new Set(data.subjects.map(s => s.name));
+      document.getElementById('totalSubjects').textContent = subjects.size;
+      
+      document.getElementById('totalDays').textContent = new Set(data.dailyLogs.map(l => l.date)).size;
+
+      const avgGrade = data.grades.length > 0 
+        ? Math.round(data.grades.reduce((a, g) => a + parseInt(g.grade), 0) / data.grades.length)
+        : null;
+      document.getElementById('avgGrade').textContent = avgGrade !== null ? avgGrade + '%' : 'N/A';
+
+      const activeSubjects = data.subjects.slice(0, 5);
+      let html = '<div>';
+      activeSubjects.forEach(subject => {
+        const student = data.students.find(s => s.id == subject.student);
+        const recentGrades = data.grades.filter(g => g.subject === subject.name);
+        const avgSubjectGrade = recentGrades.length > 0 
+          ? Math.round(recentGrades.reduce((a, g) => a + parseInt(g.grade), 0) / recentGrades.length)
+          : 0;
+        
+        html += `
+          <div class="lesson-card">
+            <h4>${subject.name} <span style="font-size: 12px; color: var(--neutral);">- ${student?.name}</span></h4>
+            <div class="lesson-meta">
+              <span>${subject.curriculum}</span>
+              <span>Grade ${subject.grade}</span>
+              ${avgSubjectGrade > 0 ? `<span>Avg: ${avgSubjectGrade}%</span>` : ''}
+            </div>
+            <p style="font-size: 13px;">${subject.objectives}</p>
+          </div>
+        `;
+      });
+      html += '</div>';
+      document.getElementById('activeSubjectsContainer').innerHTML = html;
+    }
+
+    function updateStudentsTable() {
+      const tbody = document.getElementById('studentTableBody');
+      tbody.innerHTML = '';
+
+      if (data.students.length === 0) {
+        document.getElementById('noStudents').style.display = 'block';
+        return;
+      }
+      document.getElementById('noStudents').style.display = 'none';
+
+      data.students.forEach(student => {
+        const row = `<tr>
+          <td>${student.name}</td>
+          <td>Grade ${student.grade}</td>
+          <td>${student.age}</td>
+          <td>${student.startDate}</td>
+          <td><button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;" onclick="deleteStudent(${student.id})">Delete</button></td>
+        </tr>`;
+        tbody.innerHTML += row;
+      });
+    }
+
+    function updateSubjectsDisplay() {
+      const container = document.getElementById('subjectsContainer');
+      container.innerHTML = '';
+
+      if (data.subjects.length === 0) {
+        document.getElementById('noSubjects').style.display = 'block';
+        return;
+      }
+      document.getElementById('noSubjects').style.display = 'none';
+
+      data.subjects.forEach(subject => {
+        const student = data.students.find(s => s.id == subject.student);
+        const subjectGrades = data.grades.filter(g => g.subject === subject.name);
+        const avgGrade = subjectGrades.length > 0 
+          ? Math.round(subjectGrades.reduce((a, g) => a + parseInt(g.grade), 0) / subjectGrades.length)
+          : 0;
+        const progressPercent = Math.min(100, Math.max(0, avgGrade));
+
+        const card = `
+          <div class="lesson-card">
+            <div style="display: flex; justify-content: space-between; align-items: start;">
+              <div style="flex: 1;">
+                <h4>${subject.name}</h4>
+                <div class="lesson-meta">
+                  <span>${student?.name}</span>
+                  <span>Grade ${subject.grade}</span>
+                  <span>${subject.curriculum}</span>
+                </div>
+                <p style="font-size: 13px; margin-bottom: 12px;">${subject.objectives}</p>
+                ${avgGrade > 0 ? `
+                  <p style="font-size: 13px; color: var(--neutral); margin-bottom: 8px;">Average Grade: ${avgGrade}%</p>
+                  <div class="progress-bar">
+                    <div class="progress-fill" style="width: ${progressPercent}%"></div>
+                  </div>
+                ` : ''}
+              </div>
+              <button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;" onclick="deleteSubject(${subject.id})">Delete</button>
+            </div>
+          </div>
+        `;
+        container.innerHTML += card;
+      });
+    }
+
+    function updateDailyLogsTable() {
+      const tbody = document.getElementById('dailyTableBody');
+      tbody.innerHTML = '';
+
+      if (data.dailyLogs.length === 0) {
+        document.getElementById('noDailyLogs').style.display = 'block';
+        return;
+      }
+      document.getElementById('noDailyLogs').style.display = 'none';
+
+      const sorted = [...data.dailyLogs].sort((a, b) => new Date(b.date) - new Date(a.date));
+      sorted.forEach(log => {
+        const student = data.students.find(s => s.id == log.student);
+        const row = `<tr>
+          <td>${log.date}</td>
+          <td>${student?.name}</td>
+          <td>${log.subject}</td>
+          <td>${log.duration} min</td>
+          <td>${log.notes}</td>
+          <td><button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;" onclick="deleteDailyLog(${log.id})">Delete</button></td>
+        </tr>`;
+        tbody.innerHTML += row;
+      });
+    }
+
+    function updateGradesTable() {
+      const tbody = document.getElementById('gradesTableBody');
+      tbody.innerHTML = '';
+
+      if (data.grades.length === 0) {
+        document.getElementById('noGrades').style.display = 'block';
+        return;
+      }
+      document.getElementById('noGrades').style.display = 'none';
+
+      const sorted = [...data.grades].sort((a, b) => new Date(b.date) - new Date(a.date));
+      sorted.forEach(grade => {
+        const student = data.students.find(s => s.id == grade.student);
+        const row = `<tr>
+          <td>${student?.name}</td>
+          <td>${grade.subject}</td>
+          <td>${grade.assignment}</td>
+          <td><strong>${grade.grade}%</strong></td>
+          <td>${grade.date}</td>
+          <td><button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;" onclick="deleteGrade(${grade.id})">Delete</button></td>
+        </tr>`;
+        tbody.innerHTML += row;
+      });
+    }
+
+    function updateProgressReports() {
+      const container = document.getElementById('progressContainer');
+      container.innerHTML = '';
+
+      if (data.students.length === 0) {
+        document.getElementById('noProgress').style.display = 'block';
+        return;
+      }
+      document.getElementById('noProgress').style.display = 'none';
+
+      data.students.forEach(student => {
+        const studentGrades = data.grades.filter(g => g.student == student.id);
+        const studentSubjects = data.subjects.filter(s => s.student == student.id);
+        const avgGrade = studentGrades.length > 0 
+          ? Math.round(studentGrades.reduce((a, g) => a + parseInt(g.grade), 0) / studentGrades.length)
+          : 0;
+
+        let subjectsHtml = '';
+        studentSubjects.forEach(subject => {
+          const subjectGrades = studentGrades.filter(g => g.subject === subject.name);
+          const subjectAvg = subjectGrades.length > 0
+            ? Math.round(subjectGrades.reduce((a, g) => a + parseInt(g.grade), 0) / subjectGrades.length)
+            : 0;
+          
+          subjectsHtml += `
+            <div style="margin-bottom: 12px;">
+              <p style="font-size: 14px; margin-bottom: 4px;"><strong>${subject.name}:</strong> ${subjectAvg}%</p>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: ${subjectAvg}%"></div>
+              </div>
+            </div>
+          `;
+        });
+
+        const report = `
+          <div class="lesson-card">
+            <h4>${student.name} - Grade ${student.grade}</h4>
+            <p style="font-size: 13px; color: var(--neutral); margin-bottom: 12px;">
+              📊 Overall Average: <strong>${avgGrade}%</strong> | 📚 Subjects: ${studentSubjects.length} | 📝 Grades: ${studentGrades.length}
+            </p>
+            <p style="font-size: 13px; font-weight: 600; margin-bottom: 8px;">Subject Breakdown:</p>
+            ${subjectsHtml}
+          </div>
+        `;
+        container.innerHTML += report;
+      });
+    }
+
+    function populateSelects() {
+      const subjectSelect = document.getElementById('subjectStudent');
+      const logSelect = document.getElementById('logStudent');
+      const gradeSelect = document.getElementById('gradeStudent');
+      
+      subjectSelect.innerHTML = '<option value="">Select student...</option>';
+      logSelect.innerHTML = '<option value="">Select student...</option>';
+      gradeSelect.innerHTML = '<option value="">Select student...</option>';
+      
+      data.students.forEach(s => {
+        subjectSelect.innerHTML += `<option value="${s.id}">${s.name}</option>`;
+        logSelect.innerHTML += `<option value="${s.id}">${s.name}</option>`;
+        gradeSelect.innerHTML += `<option value="${s.id}">${s.name}</option>`;
+      });
+    }
+
+    function filterStudents() {
+      const search = document.getElementById('studentSearch').value.toLowerCase();
+      const rows = document.querySelectorAll('#studentTableBody tr');
+      rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(search) ? '' : 'none';
+      });
+    }
+
+    function filterSubjects() {
+      const search = document.getElementById('subjectSearch').value.toLowerCase();
+      const cards = document.querySelectorAll('#subjectsContainer .lesson-card');
+      cards.forEach(card => {
+        const text = card.textContent.toLowerCase();
+        card.style.display = text.includes(search) ? '' : 'none';
+      });
+    }
+
+    function filterDailyLogs() {
+      const search = document.getElementById('dailySearch').value.toLowerCase();
+      const rows = document.querySelectorAll('#dailyTableBody tr');
+      rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(search) ? '' : 'none';
+      });
+    }
+
+    function filterGrades() {
+      const search = document.getElementById('gradeSearch').value.toLowerCase();
+      const rows = document.querySelectorAll('#gradesTableBody tr');
+      rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(search) ? '' : 'none';
+      });
+    }
+
+    function switchTab(tabName, element) {
+      document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.getElementById(tabName).classList.add('active');
+      if (element) {
+        element.classList.add('active');
+      } else {
+        // Fallback: encontrar el tab por su contenido de texto
+        const tabs = document.querySelectorAll('.tab');
+        tabs.forEach(tab => {
+          if (tab.textContent.includes(tabName.charAt(0).toUpperCase() + tabName.slice(1))) {
+            tab.classList.add('active');
+          }
+        });
+      }
+
+      if (tabName === 'dashboard') {
+        setTimeout(() => updateCharts(), 100);
+      }
+    }
+
+    function openModal(modalId) {
+      document.getElementById(modalId).classList.add('active');
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).classList.remove('active');
+    }
+
+    function addStudent() {
+      const name = document.getElementById('studentName').value.trim();
+      const grade = document.getElementById('studentGrade').value;
+      const age = parseInt(document.getElementById('studentAge').value);
+      const startDate = document.getElementById('studentStart').value;
+
+      if (!name || !grade || !age) {
+        alert('Please fill in required fields');
+        return;
+      }
+
+      if (isNaN(age) || age < 1 || age > 120) {
+        alert('Age must be between 1 and 120');
+        return;
+      }
+
+      data.students.push({
+        id: Math.max(...data.students.map(s => s.id), 0) + 1,
+        name, grade, age, startDate
+      });
+
+      saveData();
+      updateStudentsTable();
+      updateDashboard();
+      populateSelects();
+      updateCharts();
+      closeModal('addStudentModal');
+      document.getElementById('studentName').value = '';
+      document.getElementById('studentGrade').value = '';
+      document.getElementById('studentAge').value = '';
+    }
+
+    function addSubject() {
+      const name = document.getElementById('subjectName').value.trim();
+      const student = parseInt(document.getElementById('subjectStudent').value);
+      const grade = document.getElementById('subjectGrade').value;
+      const curriculum = document.getElementById('subjectCurriculum').value.trim();
+      const objectives = document.getElementById('subjectObjectives').value.trim();
+
+      if (!name || !student || !grade) {
+        alert('Please fill in required fields');
+        return;
+      }
+
+      data.subjects.push({
+        id: Math.max(...data.subjects.map(s => s.id), 0) + 1,
+        name, student, grade, curriculum, objectives
+      });
+
+      saveData();
+      updateSubjectsDisplay();
+      updateDashboard();
+      updateCharts();
+      closeModal('addSubjectModal');
+      document.getElementById('subjectName').value = '';
+      document.getElementById('subjectGrade').value = '';
+      document.getElementById('subjectCurriculum').value = '';
+      document.getElementById('subjectObjectives').value = '';
+    }
+
+    function addDailyLog() {
+      const date = document.getElementById('logDate').value;
+      const student = parseInt(document.getElementById('logStudent').value);
+      const subject = document.getElementById('logSubject').value.trim();
+      const duration = parseInt(document.getElementById('logDuration').value);
+      const notes = document.getElementById('logNotes').value.trim();
+
+      if (!date || !student || !subject || !duration) {
+        alert('Please fill in required fields');
+        return;
+      }
+
+      if (isNaN(duration) || duration < 1 || duration > 480) {
+        alert('Duration must be between 1 and 480 minutes');
+        return;
+      }
+
+      data.dailyLogs.push({
+        id: Math.max(...data.dailyLogs.map(l => l.id), 0) + 1,
+        date, student, subject, duration, notes
+      });
+
+      saveData();
+      updateDailyLogsTable();
+      updateDashboard();
+      updateProgressReports();
+      closeModal('addDailyLogModal');
+      document.getElementById('logDate').valueAsDate = new Date();
+      document.getElementById('logStudent').value = '';
+      document.getElementById('logSubject').value = '';
+      document.getElementById('logDuration').value = '';
+      document.getElementById('logNotes').value = '';
+    }
+
+    function addGrade() {
+      const student = parseInt(document.getElementById('gradeStudent').value);
+      const subject = document.getElementById('gradeSubject').value.trim();
+      const assignment = document.getElementById('gradeAssignment').value.trim();
+      const grade = parseInt(document.getElementById('gradeValue').value);
+      const date = document.getElementById('gradeDate').value;
+      const notes = document.getElementById('gradeNotes').value.trim();
+
+      if (!student || !subject || !assignment || !grade) {
+        alert('Please fill in required fields');
+        return;
+      }
+
+      if (isNaN(grade) || grade < 0 || grade > 100) {
+        alert('Grade must be between 0 and 100');
+        return;
+      }
+
+      data.grades.push({
+        id: Math.max(...data.grades.map(g => g.id), 0) + 1,
+        student, subject, assignment, grade, date, notes
+      });
+
+      saveData();
+      updateGradesTable();
+      updateDashboard();
+      updateSubjectsDisplay();
+      updateProgressReports();
+      updateCharts();
+      closeModal('addGradeModal');
+      document.getElementById('gradeStudent').value = '';
+      document.getElementById('gradeSubject').value = '';
+      document.getElementById('gradeAssignment').value = '';
+      document.getElementById('gradeValue').value = '';
+      document.getElementById('gradeNotes').value = '';
+    }
+
+    function deleteStudent(id) {
+      if (confirm('Delete this student?')) {
+        data.students = data.students.filter(s => s.id !== id);
+        data.subjects = data.subjects.filter(s => s.student !== id);
+        data.dailyLogs = data.dailyLogs.filter(l => l.student !== id);
+        data.grades = data.grades.filter(g => g.student !== id);
+        saveData();
+        updateStudentsTable();
+        updateSubjectsDisplay();
+        updateDailyLogsTable();
+        updateGradesTable();
+        updateDashboard();
+        updateProgressReports();
+        updateCharts();
+        populateSelects();
+      }
+    }
+
+    function deleteSubject(id) {
+      if (confirm('Delete this subject?')) {
+        data.subjects = data.subjects.filter(s => s.id !== id);
+        saveData();
+        updateSubjectsDisplay();
+        updateDashboard();
+      }
+    }
+
+    function deleteDailyLog(id) {
+      if (confirm('Delete this log entry?')) {
+        data.dailyLogs = data.dailyLogs.filter(l => l.id !== id);
+        saveData();
+        updateDailyLogsTable();
+      }
+    }
+
+    function deleteGrade(id) {
+      if (confirm('Delete this grade?')) {
+        data.grades = data.grades.filter(g => g.id !== id);
+        saveData();
+        updateGradesTable();
+        updateDashboard();
+        updateProgressReports();
+        updateCharts();
+      }
+    }
+
+    function resetData() {
+      if (confirm('Delete ALL data? This cannot be undone.')) {
+        data = { students: [], subjects: [], dailyLogs: [], grades: [] };
+        saveData();
+        updateStudentsTable();
+        updateSubjectsDisplay();
+        updateDailyLogsTable();
+        updateGradesTable();
+        updateDashboard();
+        updateProgressReports();
+        updateCharts();
+        populateSelects();
+      }
+    }
+
+    let charts = {};
+
+    function updateCharts() {
+      // Student Chart
+      const studentCount = {};
+      data.dailyLogs.forEach(log => {
+        const student = data.students.find(s => s.id == log.student);
+        if (student) {
+          studentCount[student.name] = (studentCount[student.name] || 0) + 1;
+        }
+      });
+
+      updateChart('studentChart', {
+        type: 'bar',
+        data: {
+          labels: Object.keys(studentCount),
+          datasets: [{
+            label: 'Learning Days',
+            data: Object.values(studentCount),
+            backgroundColor: '#06b6d4'
+          }]
+        }
+      });
+
+      // Subject Chart
+      const subjectCount = {};
+      data.grades.forEach(g => {
+        subjectCount[g.subject] = (subjectCount[g.subject] || 0) + 1;
+      });
+
+      updateChart('subjectChart', {
+        type: 'doughnut',
+        data: {
+          labels: Object.keys(subjectCount),
+          datasets: [{
+            data: Object.values(subjectCount),
+            backgroundColor: ['#06b6d4', '#22c55e', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899']
+          }]
+        }
+      });
+    }
+
+    function updateChart(chartId, config) {
+      const ctx = document.getElementById(chartId);
+      if (!ctx) return;
+
+      if (charts[chartId]) {
+        charts[chartId].destroy();
+      }
+
+      // Agregar options para mantener el tamaño del contenedor
+      if (!config.options) {
+        config.options = {};
+      }
+      config.options.maintainAspectRatio = false;
+      config.options.responsive = true;
+
+      charts[chartId] = new Chart(ctx, config);
+    }
+
+    function exportToCSV() {
+      let csv = 'STUDENTS\nName,Grade,Age,StartDate\n';
+      data.students.forEach(s => {
+        csv += `"${s.name}","${s.grade}","${s.age}","${s.startDate}"\n`;
+      });
+
+      csv += '\nSUBJECTS\nName,Student,Grade,Curriculum,Objectives\n';
+      data.subjects.forEach(s => {
+        const student = data.students.find(st => st.id == s.student);
+        csv += `"${s.name}","${student?.name}","${s.grade}","${s.curriculum}","${s.objectives}"\n`;
+      });
+
+      csv += '\nDAILY_LOGS\nDate,Student,Subject,Duration,Notes\n';
+      data.dailyLogs.forEach(l => {
+        const student = data.students.find(s => s.id == l.student);
+        csv += `"${l.date}","${student?.name}","${l.subject}","${l.duration}","${l.notes}"\n`;
+      });
+
+      csv += '\nGRADES\nStudent,Subject,Assignment,Grade,Date,Notes\n';
+      data.grades.forEach(g => {
+        const student = data.students.find(s => s.id == g.student);
+        csv += `"${student?.name}","${g.subject}","${g.assignment}","${g.grade}","${g.date}","${g.notes}"\n`;
+      });
+
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      const date = new Date().toISOString().split('T')[0];
+      a.download = `homeschool-${date}.csv`;
+      a.click();
+    }
+
+    function handleCSVImport(event) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const text = e.target.result;
+        alert('✓ Import functionality available - add data manually or use export to backup');
+      };
+      reader.readAsText(file);
+      event.target.value = '';
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal.active').forEach(m => m.classList.remove('active'));
+      }
+    });
+
+    document.querySelectorAll('.modal').forEach(modal => {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.classList.remove('active');
+      });
+    });
+  </script>
+
+  <!-- ========================================================== -->
+  <!-- ANTI-COPY PROTECTION LAYER -->
+  <!-- ========================================================== -->
+  <script>
+    // 🚫 ANTI-COPY PROTECTION - CAPA DE SEGURIDAD COMERCIAL
+    (function() {
+      // Limitar creaciones por sesión (máximo 10)
+      let creationCount = sessionStorage.getItem('creationCount') || 0;
+      creationCount = parseInt(creationCount);
+      const MAX_CREATIONS = 10;
+
+      // Hook original para addStudent, addSubject, addDailyLog, addGrade
+      const originalAddStudent = window.addStudent;
+      const originalAddSubject = window.addSubject;
+      const originalAddDailyLog = window.addDailyLog;
+      const originalAddGrade = window.addGrade;
+
+      window.addStudent = function() {
+        if (creationCount >= MAX_CREATIONS) {
+          alert('⚠️ Has alcanzado el límite de 10 creaciones en esta sesión.\n\nCompra la versión completa en Etsy para uso ilimitado.');
+          return;
+        }
+        creationCount++;
+        sessionStorage.setItem('creationCount', creationCount);
+        return originalAddStudent.apply(this, arguments);
+      };
+
+      window.addSubject = function() {
+        if (creationCount >= MAX_CREATIONS) {
+          alert('⚠️ Has alcanzado el límite de 10 creaciones en esta sesión.\n\nCompra la versión completa en Etsy para uso ilimitado.');
+          return;
+        }
+        creationCount++;
+        sessionStorage.setItem('creationCount', creationCount);
+        return originalAddSubject.apply(this, arguments);
+      };
+
+      window.addDailyLog = function() {
+        if (creationCount >= MAX_CREATIONS) {
+          alert('⚠️ Has alcanzado el límite de 10 creaciones en esta sesión.\n\nCompra la versión completa en Etsy para uso ilimitado.');
+          return;
+        }
+        creationCount++;
+        sessionStorage.setItem('creationCount', creationCount);
+        return originalAddDailyLog.apply(this, arguments);
+      };
+
+      window.addGrade = function() {
+        if (creationCount >= MAX_CREATIONS) {
+          alert('⚠️ Has alcanzado el límite de 10 creaciones en esta sesión.\n\nCompra la versión completa en Etsy para uso ilimitado.');
+          return;
+        }
+        creationCount++;
+        sessionStorage.setItem('creationCount', creationCount);
+        return originalAddGrade.apply(this, arguments);
+      };
+
+      // 🚫 BLOQUEO DE CLIC DERECHO
+      document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }, true);
+
+      // 🚫 BLOQUEO DE SELECCIÓN DE TEXTO
+      document.addEventListener('selectstart', function(e) {
+        if (!isEditableField(e.target)) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      }, true);
+
+      // 🚫 BLOQUEO DE ARRASTRAR CONTENIDO
+      document.addEventListener('dragstart', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }, true);
+
+      // 🚫 BLOQUEO DE COPIAR (Ctrl+C, Cmd+C)
+      document.addEventListener('copy', function(e) {
+        if (!isEditableField(e.target)) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      }, true);
+
+      // 🚫 BLOQUEO DE CORTAR (Ctrl+X, Cmd+X)
+      document.addEventListener('cut', function(e) {
+        if (!isEditableField(e.target)) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      }, true);
+
+      // 🚫 BLOQUEO DE ATAJOS DE TECLADO
+      document.addEventListener('keydown', function(e) {
+        const isMac = /Mac|iPhone|iPad|iPod/.test(navigator.platform);
+        const isCtrl = isMac ? e.metaKey : e.ctrlKey;
+
+        // Validar si el target es un campo editable
+        const isEditable = isEditableField(e.target);
+
+        // 🚫 Bloquear Ctrl+C / Cmd+C (solo si no es campo editable)
+        if (isCtrl && e.key.toLowerCase() === 'c' && !isEditable) {
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
+        }
+
+        // 🚫 Bloquear Ctrl+X / Cmd+X (solo si no es campo editable)
+        if (isCtrl && e.key.toLowerCase() === 'x' && !isEditable) {
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
+        }
+
+        // 🚫 Bloquear Ctrl+U / Cmd+U (View Source)
+        if (isCtrl && e.key.toLowerCase() === 'u') {
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
+        }
+
+        // 🚫 Bloquear Ctrl+S / Cmd+S (Save Page)
+        if (isCtrl && e.key.toLowerCase() === 's') {
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
+        }
+
+        // 🚫 Bloquear Ctrl+A / Cmd+A (Select All - solo si no es campo editable)
+        if (isCtrl && e.key.toLowerCase() === 'a' && !isEditable) {
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
+        }
+
+        // 🚫 Bloquear Ctrl+P / Cmd+P (Print)
+        if (isCtrl && e.key.toLowerCase() === 'p') {
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
+        }
+
+        // 🚫 Bloquear Ctrl+Shift+S (Save As)
+        if (isCtrl && e.shiftKey && e.key.toLowerCase() === 's') {
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
+        }
+
+        // 🚫 Bloquear F12 (DevTools)
+        if (e.key === 'F12') {
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
+        }
+
+        // 🚫 Bloquear Ctrl+Shift+I (Inspect Element - Windows/Linux)
+        if (isCtrl && e.shiftKey && e.key.toLowerCase() === 'i') {
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
+        }
+
+        // 🚫 Bloquear Ctrl+Shift+J (Console - Windows/Linux)
+        if (isCtrl && e.shiftKey && e.key.toLowerCase() === 'j') {
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
+        }
+
+        // 🚫 Bloquear Ctrl+Shift+C (Inspect Element Picker - Windows/Linux)
+        if (isCtrl && e.shiftKey && e.key.toLowerCase() === 'c') {
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
+        }
+
+        // 🚫 Bloquear Cmd+Option+I (Inspect - Mac)
+        if (isMac && e.metaKey && e.altKey && e.key.toLowerCase() === 'i') {
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
+        }
+
+        // 🚫 Bloquear Cmd+Option+J (Console - Mac)
+        if (isMac && e.metaKey && e.altKey && e.key.toLowerCase() === 'j') {
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
+        }
+
+        // 🚫 Bloquear Cmd+Option+C (Inspect Picker - Mac)
+        if (isMac && e.metaKey && e.altKey && e.key.toLowerCase() === 'c') {
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
+        }
+
+        // 🚫 Bloquear Cmd+Option+U (View Source - Mac)
+        if (isMac && e.metaKey && e.altKey && e.key.toLowerCase() === 'u') {
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
+        }
+
+      }, true);
+
+      // 🚫 BLOQUEAR PEGADO (solo en campos no editables)
+      document.addEventListener('paste', function(e) {
+        if (!isEditableField(e.target)) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      }, true);
+
+      // 🚫 DETECTAR CAMPOS EDITABLES
+      function isEditableField(element) {
+        if (!element) return false;
+        const tagName = element.tagName.toLowerCase();
+        const type = (element.type || '').toLowerCase();
+
+        return (
+          tagName === 'input' ||
+          tagName === 'textarea' ||
+          (tagName === 'select' && type !== 'radio' && type !== 'checkbox') ||
+          element.contentEditable === 'true' ||
+          element.classList.contains('form-input') ||
+          element.classList.contains('form-textarea') ||
+          element.classList.contains('form-select')
+        );
+      }
+
+      // 🛡️ DESACTIVAR DRAG AND DROP A NIVEL GLOBAL
+      document.body.style.userSelect = 'none';
+      document.body.style.WebkitUserSelect = 'none';
+      document.body.style.MozUserSelect = 'none';
+      document.body.style.msUserSelect = 'none';
+
+      // 🛡️ PROTEGER CONTRA INSPECCIÓN AVANZADA (desactivado para permitir uso)
+      // Los usuarios pueden acceder a DevTools, pero están limitados a 10 creaciones por sesión
+
+    })();
+  </script>
+</body>
+</html>
