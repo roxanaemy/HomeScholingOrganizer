@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Homeschool Family Organizer - User Guide</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1a1a1a;
+      --primary-bg: #f8f8f8;
+      --neutral: #666;
+      --neutral-light: #e0e0e0;
+      --white: #ffffff;
+      --accent: #06b6d4;
+      --accent-light: #f0f9fb;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--primary-bg);
+      color: var(--primary);
+      line-height: 1.6;
+    }
+
+    header {
+      background: var(--white);
+      border-bottom: 1px solid var(--neutral-light);
+      padding: 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-container {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-title {
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .back-link {
+      padding: 10px 16px;
+      border: 1px solid var(--neutral-light);
+      border-radius: 6px;
+      text-decoration: none;
+      color: var(--primary);
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.2s;
+      display: inline-block;
+    }
+
+    .back-link:hover {
+      background: var(--primary-bg);
+      border-color: var(--primary);
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      font-size: 32px;
+      margin-bottom: 16px;
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 12px;
+    }
+
+    h2 {
+      font-size: 24px;
+      margin-top: 40px;
+      margin-bottom: 16px;
+      color: var(--primary);
+    }
+
+    h3 {
+      font-size: 18px;
+      margin-top: 24px;
+      margin-bottom: 12px;
+    }
+
+    p {
+      margin-bottom: 12px;
+      line-height: 1.8;
+    }
+
+    .section {
+      background: var(--white);
+      border: 1px solid var(--neutral-light);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .tip {
+      background: var(--accent-light);
+      border-left: 4px solid var(--accent);
+      padding: 16px;
+      border-radius: 6px;
+      margin: 16px 0;
+    }
+
+    ol, ul {
+      margin-left: 24px;
+      margin-bottom: 12px;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    footer {
+      background: var(--white);
+      border-top: 1px solid var(--neutral-light);
+      padding: 20px;
+      margin-top: 40px;
+      text-align: center;
+    }
+
+    footer p {
+      font-size: 14px;
+      color: var(--neutral);
+      margin-bottom: 8px;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      background: var(--accent);
+      color: var(--white);
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .btn:hover {
+      background: #0891b2;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(6, 182, 212, 0.2);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <div class="header-title">🏠 Homeschool Family Organizer</div>
+      <div>
+        <a href="HomeschoolFamilyOrganizer.html" class="back-link">← Back to App</a>
+        <a href="https://www.etsy.com/shop/EverlineAutomation" class="back-link" style="background: var(--accent); border-color: var(--accent); color: var(--white);" target="_blank">🛍️ More Apps</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <h1>🏠 Homeschool Family Organizer - Complete User Guide</h1>
+    
+    <p style="font-size: 16px; color: var(--neutral); margin-bottom: 24px;">
+      Everything you need to organize, track, and document your family's homeschool journey.
+    </p>
+
+    <!-- GETTING STARTED -->
+    <div class="section">
+      <h2>🚀 Getting Started</h2>
+      
+      <h3>Opening the App</h3>
+      <ol>
+        <li>Double-click "HomeschoolFamilyOrganizer.html"</li>
+        <li>Browser opens automatically</li>
+        <li>App loads with sample family data</li>
+        <li>Start organizing your homeschool</li>
+      </ol>
+
+      <h3>First Time Setup</h3>
+      <ol>
+        <li><strong>Add Students:</strong> Enter all children's info</li>
+        <li><strong>Add Subjects:</strong> List subjects they're studying</li>
+        <li><strong>Log Daily Learning:</strong> Track each day's activities</li>
+        <li><strong>Record Grades:</strong> Document assessments</li>
+        <li><strong>View Progress:</strong> See student progress reports</li>
+      </ol>
+    </div>
+
+    <!-- HOW THE APP WORKS -->
+    <div class="section">
+      <h2>🧭 How the App Works</h2>
+      <p>The easiest way to use the organizer is to follow this order:</p>
+      <ol>
+        <li><strong>Students:</strong> Add each child you are homeschooling.</li>
+        <li><strong>Curriculum:</strong> Add the subjects each child is studying and the curriculum or objectives for each subject.</li>
+        <li><strong>Daily Log:</strong> Select a student and one of that student's subjects, then record the date, time, and what was learned.</li>
+        <li><strong>Grades:</strong> Select the same student and subject when recording assessments.</li>
+        <li><strong>Progress:</strong> Review the averages and subject summaries generated from the grades you entered.</li>
+      </ol>
+      <div class="tip">
+        <strong>💡 Simple rule:</strong> Set up Students and Subjects first. Daily Logs and Grades then build the records shown in the Dashboard and Progress sections.
+      </div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div class="section">
+      <h2>📊 Dashboard Tab</h2>
+      
+      <h3>Overview Metrics</h3>
+      <ul>
+        <li><strong>Students:</strong> Total children in your homeschool</li>
+        <li><strong>Subjects:</strong> Different subjects being taught</li>
+        <li><strong>Learning Days:</strong> Unique calendar dates with at least one learning log</li>
+        <li><strong>Avg Grade:</strong> Average grade across all assessments</li>
+      </ul>
+
+      <h3>Quick Actions</h3>
+      <ul>
+        <li>+ Add Student (new child)</li>
+        <li>+ Add Subject (new subject area)</li>
+        <li>+ Log Today (daily learning log)</li>
+        <li>View All (see complete lists)</li>
+      </ul>
+
+      <h3>Active Subjects Overview</h3>
+      <p>See active subjects with progress bars based on the recorded average grades for each student and subject.</p>
+    </div>
+
+    <!-- STUDENTS -->
+    <div class="section">
+      <h2>👨‍👩‍👧 Students Tab</h2>
+      
+      <h3>Adding Students</h3>
+      <ol>
+        <li>Click "+ Add Student"</li>
+        <li>Enter full name</li>
+        <li>Select grade level</li>
+        <li>Enter age</li>
+        <li>Set start date (when began homeschool)</li>
+        <li>Click "Add Student"</li>
+      </ol>
+
+      <h3>Why This Matters</h3>
+      <p>Tracking all children in one place ensures no subject or assessment is forgotten. Perfect for families with multiple children at different levels.</p>
+
+      <div class="tip">
+        <strong>💡 Tip:</strong> Add all children at the beginning of the school year. This makes organizing subjects and tracking progress easy.
+      </div>
+    </div>
+
+    <!-- CURRICULUM -->
+    <div class="section">
+      <h2>📚 Curriculum Tab</h2>
+      
+      <h3>Adding Subjects</h3>
+      <ol>
+        <li>Click "+ Add Subject"</li>
+        <li>Enter subject name (Math, Reading, Science, etc.)</li>
+        <li>Select which student is studying it</li>
+        <li>Select grade level</li>
+        <li>Enter curriculum used (Saxon, Singapore, Classical, etc.)</li>
+        <li>Write learning objectives</li>
+        <li>Click "Add Subject"</li>
+      </ol>
+
+      <h3>Curriculum Ideas</h3>
+      <ul>
+        <li>Mathematics (specify curriculum)</li>
+        <li>English Language Arts</li>
+        <li>Science</li>
+        <li>Social Studies / History</li>
+        <li>Foreign Language</li>
+        <li>Art</li>
+        <li>Music</li>
+        <li>Physical Education</li>
+      </ul>
+
+      <div class="tip">
+        <strong>💡 Tip:</strong> Include the specific curriculum you're using. This documents your educational approach and is helpful for record-keeping.
+      </div>
+    </div>
+
+    <!-- DAILY LOG -->
+    <div class="section">
+      <h2>📅 Daily Log Tab</h2>
+      
+      <h3>Why Track Daily Learning?</h3>
+      <p>Many states require documentation of homeschool activities. Daily logs provide proof of educational engagement and help you see patterns in learning.</p>
+      
+      <h3>Logging Daily Activities</h3>
+      <ol>
+        <li>Click "+ Log Today's Learning"</li>
+        <li>Select date</li>
+        <li>Select student</li>
+        <li>Select the student first, then select one of that student’s subjects</li>
+        <li>Enter duration (minutes)</li>
+        <li>Add notes about activities</li>
+        <li>Click "Log Activity"</li>
+      </ol>
+
+      <h3>What to Include</h3>
+      <ul>
+        <li>Math: "Completed Chapter 5 in Saxon Math, 20 problems"</li>
+        <li>Reading: "Read chapters 3-5 of novel, discussed comprehension questions"</li>
+        <li>Science: "Conducted plant growth experiment, measured height"</li>
+        <li>History: "Studied American Revolution, created timeline"</li>
+        <li>Art: "Learned watercolor techniques, created landscape"</li>
+      </ul>
+
+      <div class="tip">
+        <strong>💡 Pro Tip:</strong> Log at the end of each day while activities are fresh. Include specific details about what was learned or accomplished.
+      </div>
+    </div>
+
+    <!-- GRADES -->
+    <div class="section">
+      <h2>📈 Grades Tab</h2>
+      
+      <h3>Recording Assessments</h3>
+      <ol>
+        <li>Click "+ Record Grade"</li>
+        <li>Select student</li>
+        <li>Select one of that student’s subjects</li>
+        <li>Name the assignment or test</li>
+        <li>Enter grade (0-100)</li>
+        <li>Set date</li>
+        <li>Add optional notes</li>
+        <li>Click "Record Grade"</li>
+      </ol>
+
+      <h3>Types of Assessments</h3>
+      <ul>
+        <li>Quizzes (quick checks of understanding)</li>
+        <li>Tests (comprehensive assessments)</li>
+        <li>Projects (completed assignments)</li>
+        <li>Essays (writing assessments)</li>
+        <li>Lab Reports (science documentation)</li>
+        <li>Participation (engagement and effort)</li>
+      </ul>
+
+      <h3>Grading Tips</h3>
+      <ul>
+        <li>Be consistent with grading scales</li>
+        <li>Document major assessments</li>
+        <li>Record both strengths and areas for growth</li>
+        <li>Include dates for tracking progress over time</li>
+      </ul>
+    </div>
+
+    <!-- PROGRESS -->
+    <div class="section">
+      <h2>🎯 Progress Tab</h2>
+      
+      <h3>Student Progress Reports</h3>
+      <p>View comprehensive progress for each student including:</p>
+      <ul>
+        <li>Overall average grade</li>
+        <li>Number of subjects being studied</li>
+        <li>Number of grades recorded</li>
+        <li>Individual subject averages</li>
+        <li>Visual progress bars</li>
+      </ul>
+
+      <h3>Using Progress Reports</h3>
+      <p>Progress reports help you:</p>
+      <ul>
+        <li>Identify areas where student is excelling</li>
+        <li>Recognize subjects needing extra support</li>
+        <li>Track improvement over time</li>
+        <li>Prepare for parent-student conferences</li>
+        <li>Document educational outcomes</li>
+      </ul>
+    </div>
+
+    <!-- EXPORT & BACKUP -->
+    <div class="section">
+      <h2>📥 📤 Export & Backup</h2>
+      
+      <h3>Exporting Your Data</h3>
+      <ol>
+        <li>Click "📤 Export" button</li>
+        <li>CSV file downloads</li>
+        <li>Save to Google Drive for backup</li>
+        <li>Export monthly or quarterly</li>
+      </ol>
+
+      <h3>CSV Includes</h3>
+      <ul>
+        <li>All student information</li>
+        <li>All subjects and curricula</li>
+        <li>Complete daily learning logs</li>
+        <li>All grades and assessments</li>
+      </ul>
+
+      <h3>Importing a Backup</h3>
+      <ol>
+        <li>Click "📥 Import CSV" in the app header</li>
+        <li>Select a CSV previously exported from Homeschool Family Organizer</li>
+        <li>Confirm that you want to replace the current data</li>
+        <li>The students, subjects, daily logs, and grades are restored</li>
+      </ol>
+
+      <div class="tip">
+        <strong>⚠️ Important:</strong> Import replaces the current data in the app. Export a backup first if you want to keep the current records.
+      </div>
+
+      <h3>Resetting the App</h3>
+      <p>The "🔄 Reset" button clears the current students, subjects, daily logs, and grades after confirmation. Export a backup before using Reset if you may need the data later.</p>
+
+      <h3>Backup Strategy</h3>
+      <ul>
+        <li>Export every month</li>
+        <li>Save to Google Drive</li>
+        <li>Keep yearly archives</li>
+        <li>Never lose important records</li>
+      </ul>
+    </div>
+
+    <!-- RECORD KEEPING -->
+    <div class="section">
+      <h2>📋 Homeschool Record Keeping</h2>
+
+      <h3>What the App Records</h3>
+      <ul>
+        <li>✅ Student information</li>
+        <li>✅ Subjects and curriculum details</li>
+        <li>✅ Daily learning activities and time spent</li>
+        <li>✅ Grades and assessments</li>
+        <li>✅ Progress summaries based on recorded grades</li>
+      </ul>
+
+      <h3>Important Note About Learning Days</h3>
+      <p>The Dashboard's "Learning Days" metric counts unique calendar dates that contain at least one Daily Log. It is a learning-activity metric, not a formal attendance tracker.</p>
+
+      <h3>Using Your Records</h3>
+      <ol>
+        <li>Keep daily learning logs throughout the school year</li>
+        <li>Record important assessments and grades</li>
+        <li>Review Progress reports periodically</li>
+        <li>Export your records quarterly or annually</li>
+        <li>Keep backups in a safe location</li>
+      </ol>
+
+      <div class="tip">
+        <strong>💡 Important:</strong> Homeschool record-keeping requirements vary by state and situation. Check your state's current requirements and use this app as an organizational record-keeping tool, not as legal advice or a guarantee of compliance.
+      </div>
+    </div>
+
+    <!-- FAMILY HOMESCHOOL TIPS -->
+    <div class="section">
+      <h2>✅ Best Practices for Family Homeschooling</h2>
+      
+      <h3>Daily Routine</h3>
+      <ul>
+        <li>Log learning activities each day</li>
+        <li>Track time spent on each subject</li>
+        <li>Note specific topics covered</li>
+      </ul>
+
+      <h3>Weekly</h3>
+      <ul>
+        <li>Review daily logs to ensure variety</li>
+        <li>Plan upcoming week's lessons</li>
+        <li>Assess progress in each subject</li>
+      </ul>
+
+      <h3>Monthly</h3>
+      <ul>
+        <li>Review all grades recorded</li>
+        <li>Check progress in each subject</li>
+        <li>Export and backup data</li>
+        <li>Plan adjustments if needed</li>
+      </ul>
+
+      <h3>End of Year</h3>
+      <ul>
+        <li>Export complete year of records</li>
+        <li>Create final progress reports</li>
+        <li>Archive all documentation</li>
+        <li>Plan next year's curriculum</li>
+      </ul>
+    </div>
+
+    <!-- FAQ -->
+    <div class="section">
+      <h2>❓ FAQ</h2>
+      
+      <h3>Q: Can I track multiple children?</h3>
+      <p><strong>Answer:</strong> Yes! Add each child as a separate student. The app handles unlimited children.</p>
+
+      <h3>Q: How detailed should my daily logs be?</h3>
+      <p><strong>Answer:</strong> Include subject, duration, and what was accomplished. This proves educational engagement.</p>
+
+      <h3>Q: Can I change grades after entering them?</h3>
+      <p><strong>Answer:</strong> Delete the entry and re-enter with the correct grade. It takes 30 seconds.</p>
+
+      <h3>Q: Is this data private?</h3>
+      <p><strong>Answer:</strong> Your homeschool records are stored locally in your browser and are not uploaded to a homeschool account or server by the app. Exported files are under your control.</p>
+
+      <h3>Q: Can I use this for transcripts?</h3>
+      <p><strong>Answer:</strong> The app records grades and progress information that can be exported and used as supporting records when preparing a transcript. It does not generate an official transcript.</p>
+
+      <h3>Q: What if I need to prove education records?</h3>
+      <p><strong>Answer:</strong> Export your complete records (daily logs + grades). This documents the entire school year.</p>
+
+      <h3>Q: Does it work offline?</h3>
+      <p><strong>Answer:</strong> Yes. The core app works locally in your browser and does not require an account or internet connection to record and manage your homeschool data.</p>
+    </div>
+
+    <!-- DISCOVER MORE -->
+    <div class="section" style="text-align: center; background: var(--primary-bg); margin-top: 60px;">
+      <h2 style="border: none; padding-bottom: 0;">🎉 More Tools for Teachers & Families</h2>
+      <p style="font-size: 16px; margin-top: 12px;">Love Homeschool Family Organizer? Explore our complete collection of education tools for all teaching styles.</p>
+      <p style="font-size: 14px; color: var(--neutral); margin-bottom: 20px;">From traditional teachers to homeschoolers, we have tools for you.</p>
+      <a href="https://www.etsy.com/shop/EverlineAutomation" target="_blank" class="btn">🛍️ Visit EverlineAutomation Shop</a>
+      <p style="font-size: 12px; color: var(--neutral); margin-top: 16px;">Instant Download • Lifetime Access • No Subscriptions</p>
+    </div>
+  </div>
+
+  <footer>
+    <p>Homeschool Family Organizer © 2024 | Complete homeschooling documentation system</p>
+    <p>
+      <a href="HomeschoolFamilyOrganizer.html">← Back to App</a> | 
+      <a href="https://www.etsy.com/shop/EverlineAutomation" target="_blank">🛍️ Visit Etsy Shop</a>
+    </p>
+  </footer>
+</body>
+</html>
